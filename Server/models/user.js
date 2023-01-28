@@ -4,24 +4,28 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   // tạo collection users
-  username: { type: String, required: true },
+  username: { type: String, required: false },
   password: {
     type: String,
-    required: true,
+    required: true, // bắt buộc vì trong đăng nhập có
   },
   fullName: {
     type: String,
-    required: true,
+    required: false,
   },
   phoneNumber: {
     type: Number,
-    required: true,
+    required: false,
   },
   email: {
     type: String,
-    required: true,
+    required: true, // bắt buộc vì trong đăng nhập có
   },
   isAdmin: {
+    type: Boolean,
+    required: false,
+  },
+  isLogIn: {
     type: Boolean,
     required: true,
   },

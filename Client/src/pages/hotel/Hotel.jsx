@@ -51,12 +51,12 @@ const Hotel = () => {
       newSlideNumber = slideNumber === 5 ? 0 : slideNumber + 1;
     }
 
-    setSlideNumber(newSlideNumber)
+    setSlideNumber(newSlideNumber);
   };
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <Header type="list" />
       <div className="hotelContainer">
         {open && (

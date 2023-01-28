@@ -18,7 +18,7 @@ const List = () => {
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <Header type="list" />
       <div className="listContainer">
         <div className="listWrapper">
@@ -95,7 +95,7 @@ const List = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

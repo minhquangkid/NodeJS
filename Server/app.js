@@ -2,7 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
-const checkAuthor = require("./middleware/author");
+//const checkAuthor = require("./middleware/author");
+////////
+const homeRouters = require("./routes/home");
+const User = require("./models/user");
 
 // toàn bộ app.use() là đang sử dụng middleware
 app.use(cors());
@@ -17,6 +20,24 @@ app.use(express.urlencoded({ extended: false })); // cái này dùng với tag <
 // app.use(checkAuthor); // sử dụng middleware và đặt trước app.use(movieRouters) để nó kiểm tra trước khi chạy controller
 
 // app.use(movieRouters);
+
+app.get("/init", (req, res, next) => {
+  User.findOne({ isLogIn: true })
+    .then((data) => {
+      if (data) {
+        console.log(data);
+        res.send(data);
+      } else {
+        res.status(400);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  // return next(); // dùng next ở đây sẽ lỗi ?
+});
+
+app.use(homeRouters);
 
 mongoose
   .connect(
@@ -35,4 +56,4 @@ mongoose
 //   res.status(404).send({ message: "Route not found" });
 // });
 
-//app.listen(5000);
+// app.listen(5000);

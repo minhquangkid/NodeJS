@@ -1,17 +1,79 @@
-import "./navbar.css"
+import "./navbar.css";
+import { useState, useEffect } from "react";
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const [onl, setOnl] = useState({ show: false, content: "" });
+
+  useEffect(() => {
+    //console.log("day la nav", props.userName.status, props.userName.userMail);
+    setOnl({ show: props.userName.status, content: props.userName.userMail });
+  }, [props]);
+
+  const logOut = () => {
+    setOnl({ show: false, content: props.userName.userMail });
+
+    fetch("http://localhost:5000/logout", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        mail: props.userName.userMail, // gửi tên mail để mongodb đăng xuất mail đó
+      }),
+    })
+      .then()
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="navbar">
       <div className="navContainer">
-        <span className="logo">Booking Website</span>
+        <span
+          className="logo"
+          onClick={() => {
+            return window.location.replace("http://localhost:3000");
+          }}
+        >
+          Booking Website
+        </span>
         <div className="navItems">
-          <button className="navButton">Register</button>
-          <button className="navButton">Login</button>
+          <label className="nameUser">{onl.show ? onl.content : ""}</label>
+          {onl.show ? (
+            <button className="navButton" id="trans">
+              Transactions
+            </button>
+          ) : (
+            <button
+              className="navButton"
+              id="res"
+              onClick={() => {
+                return window.location.replace("http://localhost:3000/signin");
+              }}
+            >
+              Register
+            </button>
+          )}
+          {onl.show ? (
+            <button className="navButton" id="logout" onClick={logOut}>
+              Logout
+            </button>
+          ) : (
+            <button
+              className="navButton"
+              id="login"
+              onClick={() => {
+                return window.location.replace("http://localhost:3000/login");
+              }}
+            >
+              Login
+            </button>
+          )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
