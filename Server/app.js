@@ -2,10 +2,14 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
-//const checkAuthor = require("./middleware/author");
-////////
+
 const homeRouters = require("./routes/home");
 const User = require("./models/user");
+///
+// const Test = require("./models/test");
+// const fs = require("fs");
+// const path = require("path");
+const Hotel = require("./models/hotel");
 
 // toàn bộ app.use() là đang sử dụng middleware
 app.use(cors());
@@ -14,12 +18,36 @@ app.use(express.json()); // cái này dùng với fetch có method là POST
 app.use(express.urlencoded({ extended: false })); // cái này dùng với tag <form> có method là POST
 
 ///////////////////////////////
+// app.use((req, res, next) => {
 
-// const movieRouters = require("./routes/movie");
+// });
 
-// app.use(checkAuthor); // sử dụng middleware và đặt trước app.use(movieRouters) để nó kiểm tra trước khi chạy controller
+// app.use((req, res, next) => {
+//   Hotel.findById("6311a9c64a642f01423490bf", function (err, docs) {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       console.log("Result : ", docs);
+//     }
+//   });
+// });
 
-// app.use(movieRouters);
+// app.use((req, res, next) => {
+//   const hotel = JSON.parse(
+//     fs.readFileSync(
+//       path.join(
+//         path.dirname(process.mainModule.filename),
+//         "data",
+//         "hotels.json"
+//       ),
+//       "utf8"
+//     )
+//   );
+//   // console.log(hotel);
+//   const createRoom = new Test(...hotel);
+//   createRoom.save();
+//   console.log("test created");
+// });
 
 app.get("/init", (req, res, next) => {
   User.findOne({ isLogIn: true })

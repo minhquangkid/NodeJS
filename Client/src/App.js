@@ -11,6 +11,7 @@ function App() {
   const [log, setLog] = useState({ status: false, userMail: "" });
 
   useEffect(() => {
+    // gửi request GET để tìm xem có user nào đã đăng nhập mà chưa thoát ra ko? nếu có thì login luôn cho họ
     fetch("http://localhost:5000/init")
       .then((res) => res.json())
       .then((data) => {

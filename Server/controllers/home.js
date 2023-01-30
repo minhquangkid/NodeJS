@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Hotel = require("../models/hotel");
 
 exports.postSign = (req, res, next) => {
   console.log(req.body);
@@ -62,22 +63,45 @@ exports.postLogOut = (req, res, next) => {
     });
 };
 
-// exports.getInit = (req, res, next) => {
-//   User.findOne({ isLogIn: true })
-//     .then((data) => {
-//       if (data) {
-//         console.log(data);
-//         res.status(200).send({ message: "init" });
-//       } else {
-//         res.status(400);
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-//   // res.status(200).send({ message: "init" });
-//   // return next();
-// };
+exports.getCenter = (req, res, next) => {
+  let center = {
+    // tạo ra các thuộc tính trước để dễ tìm kiếm
+    cityType: ["Ha Noi", "Ho Chi Minh", "Da Nang"],
+    hotelType: ["hotel", "apartments", "resorts", "villas", "cabins"],
+    topRate: [],
+  };
+  async function getCityType() {
+    await Promise.all(
+      // ko thể dùng forEach (chưa thử đối với for bình thường) ,nên phải dùng promise.all và map() , xem thêm trong tài liệu tải về
+      center.cityType.map(async (items, index) => {
+        const data = await Hotel.find({ city: items });
+        center.cityType[index] = { name: items, total: data.length };
+      })
+    );
+  }
+
+  async function getHotelType() {
+    await Promise.all(
+      center.hotelType.map(async (items, index) => {
+        const data = await Hotel.find({ type: items });
+        // center.hotelType[index] = { [items]: data.length }; // khi sử dụng key của object là 1 biến thì dùng []
+        center.hotelType[index] = { name: items, total: data.length };
+      })
+    );
+  }
+
+  async function getTopRate() {
+    const data = await Hotel.find({ featured: true });
+    center.topRate = data;
+  }
+
+  getCityType() // vì async function trả về là 1 promise nên ta có thể sử dụng then() tiếp tục
+    .then(getHotelType)
+    .then(getTopRate)
+    .then(() => {
+      res.status(200).send({ message: center }); // để cho res.send chạy sau cùng (các lệnh find của mongoose hoàn tất hết)  thì ta phải dùng async
+    });
+};
 
 // const getMovie = require("../models/movie");
 // // xem kỹ thêm về restfull API

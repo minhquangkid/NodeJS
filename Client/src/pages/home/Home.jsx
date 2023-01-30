@@ -6,18 +6,33 @@ import MailList from "../../components/mailList/MailList";
 import Navbar from "../../components/navbar/Navbar";
 import PropertyList from "../../components/propertyList/PropertyList";
 import "./home.css";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+  const [content, setContent] = useState({
+    // tạo ra các thuộc tính trước để dễ tìm kiếm
+    cityType: ["Ha Noi", "Ho Chi Minh", "Da Nang"],
+    hotelType: ["hotel", "apartments", "resorts", "villas", "cabins"],
+    topRate: [],
+  });
+  useEffect(() => {
+    fetch("http://localhost:5000/center")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setContent(data.message);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <div>
-      {/* <Navbar /> */}
       <Header />
       <div className="homeContainer">
-        <Featured />
+        <Featured city={content.cityType} />
         <h1 className="homeTitle">Browse by property type</h1>
-        <PropertyList />
+        <PropertyList hotel={content.hotelType} />
         <h1 className="homeTitle">Homes guests love</h1>
-        <FeaturedProperties />
+        <FeaturedProperties top={content.topRate} />
         <MailList />
         <Footer />
       </div>

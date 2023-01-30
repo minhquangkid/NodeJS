@@ -1,6 +1,7 @@
 import "./propertyList.css";
 
-const PropertyList = () => {
+const PropertyList = (props) => {
+  // console.log(props.hotel);
   return (
     <div className="pList">
       <div className="pListItem">
@@ -10,8 +11,8 @@ const PropertyList = () => {
           className="pListImg"
         />
         <div className="pListTitles">
-          <h1>Hotels</h1>
-          <h2>233 hotels</h2>
+          <h1>{props.hotel[0].name}</h1>
+          <h2>{props.hotel[0].total} hotels</h2>
         </div>
       </div>
       <div className="pListItem">
@@ -21,8 +22,8 @@ const PropertyList = () => {
           className="pListImg"
         />
         <div className="pListTitles">
-          <h1>Apartments</h1>
-          <h2>2331 hotels</h2>
+          <h1>{props.hotel[1].name}</h1>
+          <h2>{props.hotel[1].total} hotels</h2>
         </div>
       </div>
       <div className="pListItem">
@@ -32,8 +33,8 @@ const PropertyList = () => {
           className="pListImg"
         />
         <div className="pListTitles">
-          <h1>Resorts</h1>
-          <h2>2331 hotels</h2>
+          <h1>{props.hotel[2].name}</h1>
+          <h2>{props.hotel[2].total} hotels</h2>
         </div>
       </div>
       <div className="pListItem">
@@ -43,8 +44,8 @@ const PropertyList = () => {
           className="pListImg"
         />
         <div className="pListTitles">
-          <h1>Villas</h1>
-          <h2>2331 hotels</h2>
+          <h1>{props.hotel[3].name}</h1>
+          <h2>{props.hotel[3].total} hotels</h2>
         </div>
       </div>
       <div className="pListItem">
@@ -54,8 +55,8 @@ const PropertyList = () => {
           className="pListImg"
         />
         <div className="pListTitles">
-          <h1>Cabins</h1>
-          <h2>2331 hotels</h2>
+          <h1>{props.hotel[4].name}</h1>
+          <h2>{props.hotel[4].total} hotels</h2>
         </div>
       </div>
     </div>
