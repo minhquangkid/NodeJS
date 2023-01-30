@@ -8,7 +8,7 @@ const FeaturedProperties = (props) => {
           <div className="fpItem" key={index}>
             <img src={item.photos[0]} alt="" className="fpImg" />
             <span className="fpName">
-              <a href="./hotels/0" target="_blank">
+              <a href={`/hotels/${item._id}`} target="_blank" rel="noreferrer">
                 {item.name}
               </a>
             </span>

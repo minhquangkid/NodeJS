@@ -4,11 +4,8 @@ const app = express();
 const mongoose = require("mongoose");
 
 const homeRouters = require("./routes/home");
+const hotelRouters = require("./routes/hotel");
 const User = require("./models/user");
-///
-// const Test = require("./models/test");
-// const fs = require("fs");
-// const path = require("path");
 const Hotel = require("./models/hotel");
 
 // toàn bộ app.use() là đang sử dụng middleware
@@ -16,38 +13,6 @@ app.use(cors());
 
 app.use(express.json()); // cái này dùng với fetch có method là POST
 app.use(express.urlencoded({ extended: false })); // cái này dùng với tag <form> có method là POST
-
-///////////////////////////////
-// app.use((req, res, next) => {
-
-// });
-
-// app.use((req, res, next) => {
-//   Hotel.findById("6311a9c64a642f01423490bf", function (err, docs) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log("Result : ", docs);
-//     }
-//   });
-// });
-
-// app.use((req, res, next) => {
-//   const hotel = JSON.parse(
-//     fs.readFileSync(
-//       path.join(
-//         path.dirname(process.mainModule.filename),
-//         "data",
-//         "hotels.json"
-//       ),
-//       "utf8"
-//     )
-//   );
-//   // console.log(hotel);
-//   const createRoom = new Test(...hotel);
-//   createRoom.save();
-//   console.log("test created");
-// });
 
 app.get("/init", (req, res, next) => {
   User.findOne({ isLogIn: true })
@@ -66,6 +31,7 @@ app.get("/init", (req, res, next) => {
 });
 
 app.use(homeRouters);
+app.use(hotelRouters);
 
 mongoose
   .connect(
