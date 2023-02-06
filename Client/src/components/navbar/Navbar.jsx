@@ -41,7 +41,15 @@ const Navbar = (props) => {
         <div className="navItems">
           <label className="nameUser">{onl.show ? onl.content : ""}</label>
           {onl.show ? (
-            <button className="navButton" id="trans">
+            <button
+              className="navButton"
+              id="trans"
+              onClick={() => {
+                return window.location.replace(
+                  "http://localhost:3000/transaction"
+                );
+              }}
+            >
               Transactions
             </button>
           ) : (

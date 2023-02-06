@@ -49,6 +49,18 @@ exports.postBook = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
+exports.getTrans = (req, res, next) => {
+  Transaction.find()
+    .populate("hotel")
+    .exec(function (err, data) {
+      if (err) return handleError(err);
+      // console.log("result", result);
+      // nó sẽ trả về array đầy đủ của transaction và cả thông tin đầy đủ của khách sạn
+      // nếu muốn dùng promise then() mà ko dùng callback function như trên thì dùng .execPopulate()
+      res.status(200).send({ data });
+    });
+};
+
 // exports.getRoom = (req, res, next) => {
 //   let list = [];
 //   async function roomArray(id) {

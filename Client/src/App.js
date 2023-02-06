@@ -6,6 +6,7 @@ import Hotel from "./pages/hotel/Hotel";
 import List from "./pages/list/List";
 import LogIn from "./pages/resgister/logIn";
 import SignIn from "./pages/resgister/signIn";
+import Transaction from "./pages/transaction/transaction";
 
 function App() {
   const [log, setLog] = useState({ status: false, user: "" });
@@ -35,10 +36,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/hotels" element={<List />} />
-        <Route path="/hotels/:id" element={<Hotel userName = {log.user}/>} />
+        <Route path="/hotels/:id" element={<Hotel userName={log.user} />} />
 
         <Route path="/login" element={<LogIn getInf={handleInf} />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route
+          path="/transaction"
+          element={<Transaction userName={log.user} />}
+        />
       </Routes>
     </BrowserRouter>
   );

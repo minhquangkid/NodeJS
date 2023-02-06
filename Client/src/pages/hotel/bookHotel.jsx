@@ -108,7 +108,9 @@ const BookHotel = (props) => {
       },
       body: JSON.stringify({ inf }),
     })
-      .then()
+      .then(() => {
+        alert("Succeed !");
+      })
       .catch((err) => console.log(err));
   };
 
