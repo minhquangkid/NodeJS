@@ -4,12 +4,12 @@ import { useRef, useState } from "react";
 
 const SignIn = () => {
   const [err, setErr] = useState("");
-  const mail = useRef();
+  const user = useRef();
   const pass = useRef();
 
   const subHandle = () => {
-    if (!mail.current.value) {
-      setErr("Vui lòng điền gmail");
+    if (!user.current.value) {
+      setErr("Vui lòng điền username");
     } else if (!pass.current.value) {
       setErr("Vui lòng điền password");
     } else {
@@ -19,7 +19,7 @@ const SignIn = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          getMail: mail.current.value,
+          getUser: user.current.value,
           getPass: pass.current.value,
         }),
       })
@@ -39,7 +39,7 @@ const SignIn = () => {
   return (
     <div className={classes.frame}>
       <h1>Sign Up</h1>
-      <input type="text" name="mailSign" placeholder="Your Email" ref={mail} />
+      <input type="text" name="userSign" placeholder="User Name" ref={user} />
       <input
         type="password"
         name="passSign"

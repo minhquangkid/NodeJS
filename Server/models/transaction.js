@@ -4,15 +4,26 @@ const Schema = mongoose.Schema;
 
 const transactionSchema = new Schema({
   // tạo collection users
-  user: { type: String, required: true },
-  hotel: {
+  user: {
     type: String,
     required: true,
   },
-  room: {
-    type: Array,
+  hotel: {
+    type: Schema.Types.ObjectId,
+    ref: "Hotel",
     required: true,
   },
+  room: [
+    // là 1 mảng vì người dùng có thể đặt nhiều loại phòng với nhiều số phòng ứng với từng loại trong 1 cái hotel
+    {
+      listNumber: { type: Array, required: true },
+      roomType: {
+        type: Schema.Types.ObjectId,
+        ref: "Room",
+        required: true,
+      },
+    },
+  ],
   dateStart: {
     type: Date,
     required: true,

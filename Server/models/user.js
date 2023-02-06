@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   // tạo collection users
-  username: { type: String, required: false },
+  username: { type: String, required: true }, // bắt buộc vì trong đăng nhập có
   password: {
     type: String,
     required: true, // bắt buộc vì trong đăng nhập có
@@ -19,7 +19,11 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
-    required: true, // bắt buộc vì trong đăng nhập có
+    required: false,
+  },
+  idCard: {
+    type: String,
+    required: false,
   },
   isAdmin: {
     type: Boolean,
@@ -28,7 +32,7 @@ const userSchema = new Schema({
   isLogIn: {
     type: Boolean,
     required: true,
-  },
+  }, // nên thêm 1 thuộc tính chứa id của các transaction mà người dùng thực hiện vào trong user này vì 1 người dùng có thể đặt phòng cùng lúc ở nhiều khách sạn
 
   //   cart: {
   //     items: [

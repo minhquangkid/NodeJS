@@ -12,14 +12,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import BookHotel from "./bookHotel";
 
-const Hotel = () => {
+const Hotel = ({ userName }) => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [getDetail, setGetDetail] = useState({ photos: [] });
+  const [show, setShow] = useState(false);
 
   let { id } = useParams(); // vì trong App.js phần router dùng /:id
-  console.log(id);
+  // console.log(id);
 
   useEffect(() => {
     fetch("http://localhost:5000/detail", {
@@ -50,6 +52,10 @@ const Hotel = () => {
     }
 
     setSlideNumber(newSlideNumber);
+  };
+
+  const trigger = () => {
+    setShow(!show);
   };
 
   return (
@@ -120,11 +126,12 @@ const Hotel = () => {
                 excellent location score of 9.8!
               </span>
               <h2>
-                <b>${Number(getDetail.cheapestPrice) * 9}</b> (9 nights)
+                <b>${getDetail.cheapestPrice}</b> (1 night)
               </h2>
-              <button>Reserve or Book Now!</button>
+              <button onClick={trigger}>Reserve or Book Now!</button>
             </div>
           </div>
+          {show && <BookHotel nameUser={userName} />}
         </div>
         <MailList />
         <Footer />

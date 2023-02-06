@@ -6,11 +6,11 @@ const Navbar = (props) => {
 
   useEffect(() => {
     //console.log("day la nav", props.userName.status, props.userName.userMail);
-    setOnl({ show: props.userName.status, content: props.userName.userMail });
+    setOnl({ show: props.userName.status, content: props.userName.user });
   }, [props]);
 
   const logOut = () => {
-    setOnl({ show: false, content: props.userName.userMail });
+    setOnl({ show: false, content: props.userName.user });
 
     fetch("http://localhost:5000/logout", {
       method: "POST",
@@ -18,7 +18,7 @@ const Navbar = (props) => {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        mail: props.userName.userMail, // gửi tên mail để mongodb đăng xuất mail đó
+        user: props.userName.user, // gửi tên user để mongodb đăng xuất user đó
       }),
     })
       .then()

@@ -2,18 +2,19 @@ const User = require("../models/user");
 const Hotel = require("../models/hotel");
 
 exports.postSign = (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
 
-  User.findOne({ email: req.body.getMail }).then((user) => {
+  User.findOne({ username: req.body.getUser }).then((user) => {
     // nếu ko truyền điều kiện tìm kiếm cho findOne thì nó sẽ trả về giá trị đầu tiên tìm dc
     if (!user) {
       // nếu chưa có user mới thì sẽ tạo
       const user = new User({
-        username: null,
+        username: req.body.getUser,
         password: req.body.getPass,
         fullName: null,
         phoneNumber: null,
-        email: req.body.getMail,
+        email: null,
+        idCard: null,
         isAdmin: false,
         isLogIn: false,
       });
@@ -24,17 +25,19 @@ exports.postSign = (req, res, next) => {
     } else {
       res
         .status(400)
-        .send({ redirect: false, message: "email đã được sử dụng" });
+        .send({ redirect: false, message: "username đã được sử dụng" });
     }
   });
 };
 
 exports.postLogIn = (req, res, next) => {
-  User.findOne({ email: req.body.getMail }).then((user) => {
+  User.findOne({ username: req.body.getUser }).then((user) => {
     // nếu ko truyền điều kiện tìm kiếm cho findOne thì nó sẽ trả về giá trị đầu tiên tìm dc
     if (!user) {
       // nếu ko có gmail nào
-      res.status(400).send({ isLogIn: false, message: "Sai gmail đăng nhập" });
+      res
+        .status(400)
+        .send({ isLogIn: false, message: "Sai username đăng nhập" });
     } else {
       // khi đúng gmail thì đi kiểm tra password
       if (user.password !== req.body.getPass) {
@@ -44,10 +47,10 @@ exports.postLogIn = (req, res, next) => {
           .send({ isLogIn: false, message: "Sai mật khẩu đăng nhập" });
       } else {
         // nếu đúng pass thì gửi lại tên gmail để hiện trên navbar
-        User.updateOne({ email: req.body.getMail }, { isLogIn: true })
+        User.updateOne({ username: req.body.getUser }, { isLogIn: true })
           .then((data) => {
             // updateOne là 1 promise nên bắt buộc dùng then để nó thực hiện xong updata database rồi mới đến res.status
-            res.status(200).send({ isLogIn: true, message: req.body.getMail });
+            res.status(200).send({ isLogIn: true, message: req.body.getUser });
           })
           .catch((err) => console.log(err));
       }
@@ -56,7 +59,7 @@ exports.postLogIn = (req, res, next) => {
 };
 
 exports.postLogOut = (req, res, next) => {
-  User.updateOne({ email: req.body.mail }, { isLogIn: false })
+  User.updateOne({ username: req.body.user }, { isLogIn: false })
     .then()
     .catch((err) => {
       console.log(err);

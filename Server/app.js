@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const homeRouters = require("./routes/home");
 const hotelRouters = require("./routes/hotel");
+const transactionRouters = require("./routes/transaction");
 const User = require("./models/user");
 const Hotel = require("./models/hotel");
 
@@ -18,7 +19,8 @@ app.get("/init", (req, res, next) => {
   User.findOne({ isLogIn: true })
     .then((data) => {
       if (data) {
-        console.log(data);
+        // console.log(data);
+
         res.send(data);
       } else {
         res.status(400);
@@ -32,6 +34,7 @@ app.get("/init", (req, res, next) => {
 
 app.use(homeRouters);
 app.use(hotelRouters);
+app.use(transactionRouters);
 
 mongoose
   .connect(

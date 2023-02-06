@@ -8,7 +8,7 @@ import LogIn from "./pages/resgister/logIn";
 import SignIn from "./pages/resgister/signIn";
 
 function App() {
-  const [log, setLog] = useState({ status: false, userMail: "" });
+  const [log, setLog] = useState({ status: false, user: "" });
 
   useEffect(() => {
     // gửi request GET để tìm xem có user nào đã đăng nhập mà chưa thoát ra ko? nếu có thì login luôn cho họ
@@ -17,7 +17,7 @@ function App() {
       .then((data) => {
         if (data) {
           console.log(data);
-          setLog({ status: data.isLogIn, userMail: data.email });
+          setLog({ status: data.isLogIn, user: data.username });
         }
       })
       .catch((err) => {
@@ -27,7 +27,7 @@ function App() {
 
   const handleInf = (inf) => {
     //console.log("day la app", inf);
-    setLog({ status: inf.isLogIn, userMail: inf.message });
+    setLog({ status: inf.isLogIn, user: inf.message });
   };
   return (
     <BrowserRouter>
@@ -35,7 +35,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/hotels" element={<List />} />
-        <Route path="/hotels/:id" element={<Hotel />} />
+        <Route path="/hotels/:id" element={<Hotel userName = {log.user}/>} />
 
         <Route path="/login" element={<LogIn getInf={handleInf} />} />
         <Route path="/signin" element={<SignIn />} />
