@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const homeRouters = require("./routes/home");
 const hotelRouters = require("./routes/hotel");
+const roomRouters = require("./routes/rooms.js");
 const transactionRouters = require("./routes/transaction");
 const User = require("./models/user");
 const Hotel = require("./models/hotel");
@@ -35,6 +36,7 @@ app.get("/init", (req, res, next) => {
 app.use(homeRouters);
 app.use(hotelRouters);
 app.use(transactionRouters);
+app.use(roomRouters);
 
 mongoose
   .connect(

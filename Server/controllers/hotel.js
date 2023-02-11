@@ -1,3 +1,4 @@
+const Transaction = require("../models/transaction");
 const Hotel = require("../models/hotel");
 const room = require("../models/room");
 
@@ -30,6 +31,68 @@ exports.getRoom = (req, res, next) => {
     .then((data) => {
       res.status(200).send({ listRoom: data });
     })
+    .catch((err) => console.log(err));
+};
+
+exports.getHotelList = (req, res, next) => {
+  Hotel.find({})
+    .then((data) => res.status(200).send({ data }))
+    .catch((err) => console.log(err));
+};
+
+exports.postDelete = (req, res, next) => {
+  const idHotel = req.body.idHotel;
+  console.log(idHotel);
+
+  const checkHotel = async () => {
+    // kiểm tra xem có nằm trong transaction nào ko ?
+    const data = await Transaction.findOne({
+      hotel: idHotel,
+    });
+
+    if (data) {
+      console.log(data);
+      res.send({ isOnTransaction: true });
+    } else {
+      console.log("ko có trong transaction");
+      Hotel.findByIdAndDelete(idHotel)
+        .then(() => {
+          res.send({ isOnTransaction: false });
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+  checkHotel();
+};
+
+exports.postHotel = (req, res, next) => {
+  const data = req.body.final;
+  const New = new Hotel({
+    address: data.address,
+
+    cheapestPrice: data.price,
+
+    city: data.city,
+
+    desc: data.des,
+
+    distance: data.dis,
+
+    featured: data.featured,
+
+    name: data.name,
+
+    photos: [data.imag],
+
+    rooms: data.rooms,
+
+    title: data.title,
+
+    type: data.type,
+  });
+  console.log(New);
+  New.save()
+    .then(() => res.status(200).send({ status: true })) // phải send cái gì đó để FE biết được thành công, mặc dù FE ko dùng đến status: true
     .catch((err) => console.log(err));
 };
 

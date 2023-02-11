@@ -5,4 +5,10 @@ const router = express.Router();
 
 router.post("/detail", hotelController.getDetail);
 router.post("/getRoom", hotelController.getRoom);
+
+//// nhận từ admin
+router.get("/admin/hotelList", hotelController.getHotelList);
+router.post("/admin/hotelList/deleteHotel", hotelController.postDelete);
+router.post("/admin/postHotel", hotelController.postHotel);
+
 module.exports = router;

@@ -7,7 +7,7 @@ const Transaction = ({ userName }) => {
   useEffect(() => {
     fetch("http://localhost:5000/transaction")
       .then((res) => res.json())
-      .then((result) => setList(result.data))
+      .then((result) => console.log(result))
       .catch((err) => console.log(err));
   }, []);
   const run = (arr) => {
@@ -15,7 +15,7 @@ const Transaction = ({ userName }) => {
     arr.forEach((item) => {
       total = total + "," + item.listNumber.join(",");
     });
-    return total;
+    return total.substring(1); // xóa đi dấu "," dư ban đầu
   };
   return (
     <div className="tbl">

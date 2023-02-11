@@ -61,6 +61,12 @@ exports.getTrans = (req, res, next) => {
     });
 };
 
+// exports.getDash = (req, res, next) => {
+//   Transaction.find({})
+//     .then((result) => res.status(200).send({ result }))
+//     .catch((err) => console.log(err));
+// };
+
 // exports.getRoom = (req, res, next) => {
 //   let list = [];
 //   async function roomArray(id) {

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const roomSchema = new Schema({
-  createAt: { type: Date, required: true },
+  createAt: { type: Date, required: false },
   desc: {
     type: String,
     required: true,
@@ -26,7 +26,7 @@ const roomSchema = new Schema({
   },
   updatedAt: {
     type: Date,
-    required: true,
+    required: false,
   },
 });
 

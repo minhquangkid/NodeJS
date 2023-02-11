@@ -246,7 +246,7 @@ const BookHotel = (props) => {
       </div>
       <div className={classes.dateContainer}>
         <div className={classes.calendar}>
-          <h2>Total Bill : {total}</h2>
+          <h2>Total Bill : {total || 0}</h2>
           <select
             name="payment"
             className={classes.payment}

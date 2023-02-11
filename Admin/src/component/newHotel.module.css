@@ -1,0 +1,33 @@
+.frame {
+  padding: 10px;
+}
+.title {
+  border: black solid 1px;
+  padding: 10px;
+}
+.content {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 200px;
+}
+.column {
+  flex: 1;
+}
+.column label,
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+}
+.bot > label {
+  display: block;
+  margin-bottom: 5px;
+}
+.bot > select {
+  width: 100%;
+  padding: 10px 0;
+}
+.bot option {
+  padding: 5px 0;
+}
