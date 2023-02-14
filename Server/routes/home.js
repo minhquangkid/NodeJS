@@ -11,4 +11,8 @@ router.post("/logout", homeController.postLogOut);
 
 router.get("/center", homeController.getCenter);
 
+////
+router.post("/admin/login", homeController.postLogIn);
+router.post("/admin/logout", homeController.postLogOut);
+
 module.exports = router;

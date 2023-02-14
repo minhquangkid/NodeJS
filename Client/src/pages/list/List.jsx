@@ -10,11 +10,30 @@ import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 
 const List = () => {
-  const location = useLocation();
+  const location = useLocation(); // kết hợp với useNavigate() bên trang home để có thể lấy thông tin phần Search bên header và điền vào trang này
   const [destination, setDestination] = useState(location.state.destination);
   const [date, setDate] = useState(location.state.date);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
+  const [list, setList] = useState([]);
+
+  const submitHandle = () => {
+    fetch("http://localhost:5000/list/postHotel", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        destination,
+        date,
+        options,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setList(data.array);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
@@ -26,7 +45,13 @@ const List = () => {
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label>Destination</label>
-              <input placeholder={destination} type="text" />
+              <input
+                placeholder={destination}
+                type="text"
+                onChange={(e) => {
+                  setDestination(e.target.value);
+                }}
+              />
             </div>
             <div className="lsItem">
               <label>Check-in Date</label>
@@ -86,12 +111,34 @@ const List = () => {
                 </div>
               </div>
             </div>
-            <button>Search</button>
+            <button onClick={submitHandle}>Search</button>
           </div>
           <div className="listResult">
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
+            {list.map((item) => {
+              return (
+                <SearchItem
+                  key={item._id}
+                  name={item.name}
+                  type={item.type}
+                  description={item.desc}
+                  price={item.cheapestPrice}
+                  img_url={item.photos[0]}
+                  distance={item.distance}
+                  free_cancel={item.featured}
+                />
+              );
+            })}
+
+            {/*  name,
+  distance,
+  tag,
+  type,
+  description,
+  free_cancel,
+  price,
+  rate,
+  rate_text,
+  img_url, */}
           </div>
         </div>
       </div>

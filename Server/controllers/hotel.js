@@ -1,6 +1,7 @@
 const Transaction = require("../models/transaction");
 const Hotel = require("../models/hotel");
 const room = require("../models/room");
+const { request } = require("express");
 
 exports.getDetail = (req, res, next) => {
   // console.log(req.body);
@@ -63,6 +64,19 @@ exports.postDelete = (req, res, next) => {
     }
   };
   checkHotel();
+};
+
+exports.searchHotel = (req, res, next) => {
+  const request = req.body;
+  console.log(request);
+  const city = async () => {
+    const cityArray = await Hotel.find({ city: request.destination });
+    return cityArray;
+  };
+
+  city()
+    .then((array) => res.send({ array }))
+    .catch((err) => console.log(err));
 };
 
 exports.postHotel = (req, res, next) => {

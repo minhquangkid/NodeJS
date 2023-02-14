@@ -1,11 +1,14 @@
 import React from "react";
 import "./hotelList.css";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RoomList = () => {
   const [list, setList] = useState([]);
 
-  useEffect(() => {
+  const navigate = useNavigate();
+
+  const render = () => {
     fetch("http://localhost:5000/admin/roomList")
       .then((res) => res.json())
       .then((result) => {
@@ -15,6 +18,10 @@ const RoomList = () => {
         setList(array);
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    render();
   }, []);
 
   const deleteHandle = (e) => {
@@ -30,7 +37,7 @@ const RoomList = () => {
         if (result.isOnTransaction) {
           alert("Room is on transaction !");
         } else {
-          window.location.href = "http://localhost:3001/rooms";
+          render();
         }
       })
       .catch((err) => console.log(err));
@@ -39,10 +46,7 @@ const RoomList = () => {
   return (
     <div className="frameList">
       <h3>Rooms List</h3>
-      <button
-        className="add"
-        onClick={() => (window.location.href = "http://localhost:3001/newRoom")}
-      >
+      <button className="add" onClick={() => navigate("/newRoom")}>
         Add New
       </button>
       <div>

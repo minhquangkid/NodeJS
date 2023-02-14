@@ -31,6 +31,7 @@ exports.postSign = (req, res, next) => {
 };
 
 exports.postLogIn = (req, res, next) => {
+  console.log(req.body);
   User.findOne({ username: req.body.getUser }).then((user) => {
     // nếu ko truyền điều kiện tìm kiếm cho findOne thì nó sẽ trả về giá trị đầu tiên tìm dc
     if (!user) {
@@ -46,13 +47,33 @@ exports.postLogIn = (req, res, next) => {
           .status(400)
           .send({ isLogIn: false, message: "Sai mật khẩu đăng nhập" });
       } else {
-        // nếu đúng pass thì gửi lại tên gmail để hiện trên navbar
-        User.updateOne({ username: req.body.getUser }, { isLogIn: true })
-          .then((data) => {
-            // updateOne là 1 promise nên bắt buộc dùng then để nó thực hiện xong updata database rồi mới đến res.status
-            res.status(200).send({ isLogIn: true, message: req.body.getUser });
-          })
-          .catch((err) => console.log(err));
+        if (req.body.getAdmin) {
+          // nếu đăng nhập dưới quyền
+
+          User.updateOne(
+            { username: req.body.getUser },
+            { isLogIn: true, isAdmin: true }
+          )
+            .then((data) => {
+              // updateOne là 1 promise nên bắt buộc dùng then để nó thực hiện xong updata database rồi mới đến res.status
+              res.status(200).send({
+                isLogIn: true,
+                message: req.body.getUser,
+                Admin: req.body.getAdmin,
+              }); // nếu đúng pass thì gửi lại tên gmail để hiện trên navbar
+            })
+            .catch((err) => console.log(err));
+        } else {
+          User.updateOne({ username: req.body.getUser }, { isLogIn: true })
+            .then((data) => {
+              res.status(200).send({
+                isLogIn: true,
+                message: req.body.getUser,
+                Admin: req.body.getAdmin,
+              });
+            })
+            .catch((err) => console.log(err));
+        }
       }
     }
   });

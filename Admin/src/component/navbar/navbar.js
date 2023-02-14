@@ -1,44 +1,58 @@
 import React from "react";
 import "./navbar.css";
+import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const logoutHandle = () => {
+    console.log(props.inf.message);
+    fetch("http://localhost:5000/admin/logout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user: props.inf.message }),
+    })
+      .then()
+      .catch();
+    props.getBack();
+  };
   return (
     <div className="frame">
       <h2>Admin Page</h2>
       <label>Main</label>
       <ul>
         <li>
-          <a href="http://localhost:3001">Dashboard</a>
+          <Link to="/">Dashboard</Link>
         </li>
       </ul>
       <label>USTS</label>
       <ul>
         <li>
-          <a href="http://localhost:3001/users">Users</a>
+          <Link href="/users">Users</Link>
         </li>
         <li>
-          <a href="http://localhost:3001/hotels">hotels</a>
+          <Link to="/hotels">hotels</Link>
         </li>
         <li>
-          <a href="http://localhost:3001/rooms">Rooms</a>
+          <Link to="/rooms">Rooms</Link>
         </li>
         <li>
-          <a href="http://localhost:3001/rransactions">Transactions</a>
+          <Link to="/transactions">Transactions</Link>
         </li>
       </ul>
       <label>NEW</label>
       <ul>
         <li>
-          <a href="http://localhost:3001/newHotel">New Hotel</a>
+          <Link to="/newHotel">New Hotel</Link>
         </li>
         <li>
-          <a href="http://localhost:3001/newRoom">New Room</a>
+          <Link to="/newRoom">New Room</Link>
         </li>
       </ul>
       <label>USER</label>
       <ul>
         <li>
-          <a href="#">Logout</a>
+          <Link to="" onClick={logoutHandle}>
+            Logout
+          </Link>
         </li>
       </ul>
     </div>
