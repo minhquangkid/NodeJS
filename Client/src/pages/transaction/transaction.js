@@ -7,9 +7,15 @@ const Transaction = ({ userName }) => {
   useEffect(() => {
     fetch("http://localhost:5000/transaction")
       .then((res) => res.json())
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result);
+        const filter = result.data.filter((item) => {
+          return item.user === userName;
+        });
+        setList(filter);
+      })
       .catch((err) => console.log(err));
-  }, []);
+  }, [userName]);
   const run = (arr) => {
     let total = "";
     arr.forEach((item) => {

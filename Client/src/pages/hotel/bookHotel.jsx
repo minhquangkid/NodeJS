@@ -166,7 +166,6 @@ const BookHotel = (props) => {
           <DateRange
             editableDateInputs={true}
             onChange={handleSelect}
-            // onChange={handleSelect}
             moveRangeOnFirstSelection={false}
             ranges={date}
             className=""

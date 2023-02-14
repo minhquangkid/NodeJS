@@ -68,6 +68,8 @@ exports.postDelete = (req, res, next) => {
 
 exports.searchHotel = (req, res, next) => {
   const request = req.body;
+  // const start = new Date(request.date[0].startDate);
+  // const end = new Date(request.date[0].endDate);
   console.log(request);
   const city = async () => {
     const cityArray = await Hotel.find({ city: request.destination });
@@ -75,7 +77,13 @@ exports.searchHotel = (req, res, next) => {
   };
 
   city()
-    .then((array) => res.send({ array }))
+    .then((array) => {
+      //   const list = array.filter((item) => {
+      //     return new Date(item.dateEnd) < start || new Date(item.dateStart) > end;
+      //   });
+
+      res.send({ array });
+    })
     .catch((err) => console.log(err));
 };
 
