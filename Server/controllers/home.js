@@ -64,7 +64,10 @@ exports.postLogIn = (req, res, next) => {
             })
             .catch((err) => console.log(err));
         } else {
-          User.updateOne({ username: req.body.getUser }, { isLogIn: true })
+          User.updateOne(
+            { username: req.body.getUser },
+            { isLogIn: true, isAdmin: false }
+          )
             .then((data) => {
               res.status(200).send({
                 isLogIn: true,

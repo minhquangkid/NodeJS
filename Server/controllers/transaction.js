@@ -45,7 +45,10 @@ exports.postBook = (req, res, next) => {
   });
   transaction
     .save()
-    .then()
+    .then((r) => {
+      console.log("Asdasdasd");
+      return res.status(200).send(true);
+    })
     .catch((err) => console.log(err));
 };
 

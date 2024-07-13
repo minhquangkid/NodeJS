@@ -51,6 +51,13 @@ mongoose
     console.log(err);
   });
 
+/*
+
+useNewUrlParser: true: Sử dụng trình phân tích cú pháp URL mới của MongoDB. Điều này giúp xử lý các thay đổi trong cách URL được phân tích và kết nối.
+useUnifiedTopology: true: Sử dụng công cụ quản lý kết nối mới của MongoDB. Điều này cung cấp một cách quản lý kết nối nhất quán và ổn định hơn.
+
+*/
+
 // app.use((req, res, next) => { // phải kiếm chỗ đặt cái này
 //   res.status(404).send({ message: "Route not found" });
 // });
